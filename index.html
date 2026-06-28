@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milestones — Wireframe</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --ink:        #2A3A53;
+  --ink-2:      #545F71;
+  --muted:      #9BA5B7;
+  --fill:       #EEF1F4;
+  --fill-2:     #F7F8FA;
+  --line:       #BAC0CA;
+  --surface:    #FFFFFF;
+  --accent:     #F6CA56;
+  --accent-str: #F6BE2C;
+  --accent-wash:#FFFAEF;
+  --accent-text:#936B06;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 20px; --r-pill: 999px;
+  --shadow-md: 0 4px 16px rgba(42,58,83,0.14);
+  --font: 'Inter', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: #D6DBE3;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 16px 64px;
+}
+
+/* ─── Phone shell ─────────────────────────── */
+.phone {
+  width: 393px;
+  height: 852px;
+  background: var(--fill-2);
+  border-radius: 44px;
+  overflow: hidden;
+  border: 10px solid var(--ink);
+  box-shadow: 0 32px 72px rgba(42,58,83,.32);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.phone-scroll::-webkit-scrollbar { display: none; }
+
+/* ─── Status bar ──────────────────────────── */
+.statusbar {
+  background: var(--surface);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 20px 9px;
+  border-bottom: 1px solid var(--fill);
+}
+.statusbar span { font-size: 11px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+
+/* ─── Header ──────────────────────────────── */
+.header {
+  background: var(--surface);
+  padding: 14px 16px 16px;
+  border-bottom: 1px solid var(--fill);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.back-btn {
+  width: 34px; height: 34px; border-radius: var(--r-sm);
+  border: 1.5px solid var(--line); background: var(--fill-2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+}
+.header-text { flex: 1; }
+.header-title { font-size: 17px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.header-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+/* ─── Personalisation greeting ────────────── */
+.greeting-block {
+  background: var(--surface);
+  padding: 16px 16px 14px;
+  border-bottom: 1px solid var(--fill);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.greeting-left {}
+.greeting-hi {
+  font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: -0.01em;
+}
+.greeting-name {
+  font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.03em; margin-top: 1px;
+}
+.greeting-tier {
+  display: inline-flex; align-items: center; gap: 5px;
+  margin-top: 6px; background: var(--accent-wash);
+  border: 1.5px solid var(--accent-str); border-radius: var(--r-pill);
+  padding: 4px 10px;
+}
+.greeting-tier-text {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--accent-text);
+}
+.avatar-circle {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--fill); border: 1.5px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; font-weight: 800; color: var(--ink-2);
+  flex-shrink: 0;
+}
+
+/* ─── Collapsed earned card ───────────────── */
+.mcard.collapsed {
+  padding: 11px 14px;
+  cursor: pointer;
+}
+.mcard.collapsed .mc-collapse-row {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mc-collapse-left { display: flex; align-items: center; gap: 10px; }
+.mc-collapse-icon {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--ink);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.mc-collapse-name { font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
+.mc-collapse-days { font-size: 10px; color: var(--muted); margin-top: 1px; }
+.mc-collapse-right { display: flex; align-items: center; gap: 8px; }
+.mc-collapse-coin  { display: flex; align-items: center; gap: 4px; }
+.mc-collapse-coin .coin-pip { width: 16px; height: 16px; font-size: 7px; }
+.mc-collapse-coinval { font-size: 12px; font-weight: 700; color: var(--ink); }
+.mc-collapse-caret {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid var(--line); background: var(--fill-2);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ─── Coin summary banner ─────────────────── */
+.coin-banner {
+  margin: 12px 16px 0;
+  background: var(--ink);
+  border-radius: var(--r-lg);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.cb-item { flex: 1; }
+.cb-label { font-size: 9px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+.cb-val { font-size: 19px; font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-top: 2px; }
+.cb-val span { font-size: 11px; font-weight: 500; color: rgba(255,255,255,.6); margin-left: 3px; }
+.cb-div { width: 1px; height: 36px; background: rgba(255,255,255,.16); margin: 0 14px; }
+
+/* ─── Section label ───────────────────────── */
+.section-lbl {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 16px 16px 8px;
+}
+
+/* ─── Milestone cards ─────────────────────── */
+.cards { padding: 0 16px 20px; display: flex; flex-direction: column; gap: 10px; }
+
+.mcard {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 14px 14px 12px;
+  cursor: pointer;
+  transition: box-shadow 120ms;
+  position: relative;
+}
+.mcard:hover { box-shadow: var(--shadow-md); }
+.mcard.ongoing { border-color: var(--ink); }
+.mcard.earned  { border-color: var(--ink); }
+.mcard.pending { opacity: 0.5; cursor: default; }
+
+/* top row */
+.mc-top { display: flex; align-items: flex-start; justify-content: space-between; }
+.mc-name { font-size: 16px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.mc-days { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* tier badge + state badge row */
+.mc-badges { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+.tier-badge {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: var(--r-pill); border: 1.5px solid var(--ink);
+  color: var(--ink); background: transparent;
+}
+.state-badge {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: var(--r-pill); border: 1.5px solid;
+}
+.state-badge.ongoing { background: var(--accent); color: var(--accent-text); border-color: var(--accent-str); }
+.state-badge.earned  { background: var(--ink); color: #fff; border-color: var(--ink); }
+.state-badge.pending { background: var(--fill); color: var(--muted); border-color: var(--line); }
+
+/* coin row */
+.mc-coins { display: flex; align-items: center; gap: 7px; margin-top: 10px; }
+.coin-pip {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); border: 1.5px solid var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8px; font-weight: 800; color: var(--accent-text);
+  flex-shrink: 0;
+}
+.coin-pip.dim { background: var(--fill); border-color: var(--line); color: var(--muted); }
+.coin-num { font-size: 13px; font-weight: 700; color: var(--ink); }
+.coin-eq  { font-size: 11px; color: var(--muted); }
+
+/* progress bar */
+.mc-prog { margin-top: 10px; }
+.prog-track { height: 3px; background: var(--fill); border-radius: 99px; overflow: hidden; }
+.prog-fill  { height: 100%; border-radius: 99px; background: var(--ink); transition: width 300ms; }
+.prog-meta  { font-size: 10px; color: var(--muted); margin-top: 4px; display: flex; justify-content: space-between; }
+
+/* icon state */
+.mc-icon {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.mc-icon.done   { background: var(--ink); }
+.mc-icon.active { background: var(--accent); border: 1.5px solid var(--accent-str); }
+.mc-icon.locked { background: var(--fill); border: 1.5px solid var(--line); }
+
+/* tap hint */
+.tap-hint {
+  font-size: 9px; color: var(--muted); font-weight: 500;
+  margin-top: 8px; display: flex; align-items: center; gap: 4px;
+}
+
+/* ─── CTA ─────────────────────────────────── */
+.cta-wrap { padding: 0 16px 28px; }
+.cta-btn {
+  width: 100%; height: 48px; border-radius: var(--r-lg);
+  background: var(--ink); border: none;
+  font: 700 14px var(--font); letter-spacing: -0.01em;
+  color: #fff; cursor: pointer;
+}
+
+/* ─── Bottom sheet ────────────────────────── */
+.sheet-overlay {
+  position: absolute; inset: 0;
+  background: rgba(42,58,83,.45);
+  opacity: 0; pointer-events: none;
+  transition: opacity 200ms;
+  z-index: 10;
+}
+.sheet-overlay.open { opacity: 1; pointer-events: all; }
+
+.bottom-sheet {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: var(--surface);
+  border-radius: 24px 24px 0 0;
+  padding: 0 0 28px;
+  transform: translateY(100%);
+  transition: transform 240ms cubic-bezier(.32,.72,0,1);
+  z-index: 11;
+  max-height: 92%;
+  overflow-y: auto;
+}
+.bottom-sheet.open { transform: translateY(0); }
+
+.sheet-handle {
+  width: 36px; height: 4px; border-radius: 99px;
+  background: var(--line); margin: 12px auto 0;
+}
+
+.sheet-header {
+  padding: 12px 16px 0;
+  display: flex; align-items: flex-start; justify-content: space-between;
+}
+.sheet-title { font-size: 16px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.sheet-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.close-btn {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--fill); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  font-size: 13px; color: var(--ink-2); font-weight: 700;
+}
+
+/* streak stats row */
+.streak-stats {
+  display: flex; gap: 8px; padding: 12px 16px 0;
+}
+.sstat {
+  flex: 1; background: var(--fill-2); border: 1.5px solid var(--line);
+  border-radius: var(--r-md); padding: 10px 12px;
+}
+.sstat-val { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.sstat-lbl { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+
+/* calendar */
+.cal-section { padding: 14px 16px 0; }
+.cal-month { font-size: 11px; font-weight: 700; color: var(--ink-2); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-day-hdr { font-size: 9px; font-weight: 700; color: var(--muted); text-align: center; padding: 3px 0; letter-spacing: 0.05em; }
+.cal-cell {
+  aspect-ratio: 1; border-radius: var(--r-sm); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600; color: var(--muted);
+  border: 1.5px solid transparent;
+}
+.cal-cell.streaked  { background: var(--ink); color: #fff; border-color: var(--ink); }
+.cal-cell.today     { border-color: var(--ink); color: var(--ink); background: transparent; }
+.cal-cell.remaining { border: 1.5px dashed var(--accent-str); color: var(--accent-text); background: var(--accent-wash); font-weight: 700; }
+.cal-cell.missed    { background: var(--fill); color: var(--muted); text-decoration: line-through; }
+.cal-cell.empty     { background: transparent; }
+
+/* coin earned row in sheet */
+.sheet-coin-row {
+  margin: 14px 16px 0; background: var(--accent-wash);
+  border: 1.5px dashed var(--accent-str); border-radius: var(--r-md);
+  padding: 12px 14px; display: flex; align-items: center; gap: 10px;
+}
+.sheet-coin-row .coin-pip { width: 24px; height: 24px; font-size: 10px; }
+.sc-label { font-size: 12px; font-weight: 700; color: var(--accent-text); }
+.sc-sub   { font-size: 10px; color: var(--accent-text); opacity: .7; margin-top: 1px; }
+</style>
+</head>
+<body>
+
+<div class="phone" id="phone">
+
+  <!-- Status bar -->
+  <div class="statusbar">
+    <span>9:41</span>
+    <span style="letter-spacing:1px;">●●●● ▲</span>
+    <span>100%</span>
+  </div>
+
+  <!-- Top nav -->
+  <div style="background:var(--surface);padding:10px 16px 10px;border-bottom:1px solid var(--fill);display:flex;align-items:center;gap:10px;">
+    <div style="width:34px;height:34px;border-radius:var(--r-sm);border:1.5px solid var(--line);background:var(--fill-2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--ink-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9,2 4,7 9,12"/>
+      </svg>
+    </div>
+    <span style="font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;flex:1;">Dashboard</span>
+  </div>
+
+  <!-- Greeting / personalisation -->
+  <div class="greeting-block">
+    <div class="greeting-left">
+      <div class="greeting-hi" style="font-size:15px;">Hi Komal,</div>
+      <div class="greeting-name" style="font-size:20px;margin-top:3px;">You're Star</div>
+    </div>
+    <button onclick="openHowItWorks()" style="background:none;border:none;font:600 12px var(--font);color:var(--ink-2);letter-spacing:-0.01em;cursor:pointer;text-decoration:underline;text-underline-offset:3px;flex-shrink:0;align-self:flex-end;padding-bottom:2px;">
+      How it works?
+    </button>
+  </div>
+
+  <div class="phone-scroll">
+
+  <!-- Coins + Redeem CTA + Streak progress -->
+  <div style="background:var(--surface);padding:14px 16px 16px;border-bottom:1px solid var(--fill);">
+
+    <!-- Coins + Streak single row -->
+    <div style="display:flex;align-items:flex-start;gap:0;margin-bottom:10px;">
+
+      <!-- Total coins -->
+      <div style="flex:1;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Total coins</div>
+        <div style="display:flex;align-items:baseline;gap:5px;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--accent);border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:var(--accent-text);flex-shrink:0;">₵</div>
+          <span style="font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-0.03em;">80</span>
+          <span style="font-size:12px;color:var(--muted);font-weight:500;">coins</span>
+        </div>
+        <button style="background:none;border:none;padding:0;margin-top:4px;font:700 11px var(--font);color:var(--ink);letter-spacing:-0.01em;cursor:pointer;text-decoration:underline;text-underline-offset:3px;">Redeem Now</button>
+      </div>
+
+      <!-- Vertical divider -->
+      <div style="width:1px;background:var(--fill);align-self:stretch;margin:0 16px;"></div>
+
+      <!-- Day streak -->
+      <div style="flex:1;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Current streak</div>
+        <div style="display:flex;align-items:baseline;gap:5px;">
+          <span style="font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-0.04em;">5</span>
+          <span style="font-size:12px;font-weight:500;color:var(--muted);">days</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Locked subtext -->
+    <div style="display:flex;align-items:center;gap:4px;">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="4.5" width="6" height="4.5" rx="1"/><path d="M3.5,4.5V3a2,2,0,0,1,3,0v1.5"/></svg>
+      <span style="font-size:10px;color:var(--muted);font-weight:500;">50 coins locked · Complete Superstar to unlock</span>
+    </div>
+
+  </div>
+
+  <!-- Streak Progress Tracker -->
+  <div style="background:var(--surface);padding:14px 16px 16px;border-bottom:1px solid var(--fill);">
+    <div style="font-size:9px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Streak Progress</div>
+    <div style="display:flex;gap:5px;">
+      <!-- D1–D5 done -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="width:100%;height:40px;border-radius:8px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;">D1</div>
+        <span style="font-size:8px;font-weight:600;color:var(--ink-2);">Jun 24</span>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="width:100%;height:40px;border-radius:8px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;">D2</div>
+        <span style="font-size:8px;font-weight:600;color:var(--ink-2);">Jun 25</span>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="width:100%;height:40px;border-radius:8px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;">D3</div>
+        <span style="font-size:8px;font-weight:600;color:var(--ink-2);">Jun 26</span>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="width:100%;height:40px;border-radius:8px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;">D4</div>
+        <span style="font-size:8px;font-weight:600;color:var(--ink-2);">Jun 27</span>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="width:100%;height:40px;border-radius:8px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;">D5</div>
+        <span style="font-size:8px;font-weight:600;color:var(--ink-2);">Jun 28</span>
+      </div>
+      <!-- D6–D7 remaining -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="width:100%;height:40px;border-radius:8px;background:var(--accent-wash);border:1.5px solid var(--accent-str);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:var(--accent-text);">D6</div>
+        <span style="font-size:8px;font-weight:600;color:var(--accent-text);">Jun 29</span>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="width:100%;height:40px;border-radius:8px;background:var(--accent-wash);border:1.5px solid var(--accent-str);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:var(--accent-text);">D7</div>
+        <span style="font-size:8px;font-weight:600;color:var(--accent-text);">Jun 30</span>
+      </div>
+    </div>
+
+    <!-- Status component -->
+    <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;background:var(--accent-wash);border:1.5px solid var(--accent-str);border-radius:var(--r-md);padding:10px 12px;">
+      <div style="display:flex;align-items:center;gap:7px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--accent-str);flex-shrink:0;"></div>
+        <span style="font-size:12px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;">2 days left to be <span style="color:var(--accent-text);">"Superstar"</span></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
+        <div style="width:16px;height:16px;border-radius:50%;background:var(--accent);border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:800;color:var(--accent-text);">₵</div>
+        <span style="font-size:12px;font-weight:700;color:var(--accent-text);">Earn 70 coins</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-lbl">Your milestones</div>
+
+  <div class="cards">
+
+    <!-- CARD 1: 7-day ONGOING (shown first) -->
+    <div class="mcard ongoing">
+      <div class="mc-top">
+        <div>
+          <div class="mc-name">Superstar · 7 Day Streak</div>
+        </div>
+        <div class="mc-icon active">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--accent-text)" stroke-width="2" stroke-linecap="round">
+            <circle cx="7" cy="7" r="5.5"/><polyline points="7,4 7,7 9,8.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mc-coins">
+        <div class="coin-pip">₵</div>
+        <span class="coin-num">Earned 70 coins</span>
+      </div>
+      <!-- Progress bar -->
+      <div class="mc-prog" style="margin-top:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <div style="display:flex;gap:4px;">
+            <!-- D1–D5 filled segments -->
+            <div style="width:30px;height:6px;border-radius:99px;background:var(--ink);"></div>
+            <div style="width:30px;height:6px;border-radius:99px;background:var(--ink);"></div>
+            <div style="width:30px;height:6px;border-radius:99px;background:var(--ink);"></div>
+            <div style="width:30px;height:6px;border-radius:99px;background:var(--ink);"></div>
+            <div style="width:30px;height:6px;border-radius:99px;background:var(--ink);"></div>
+            <!-- D6–D7 remaining -->
+            <div style="width:30px;height:6px;border-radius:99px;background:var(--accent-wash);border:1.5px solid var(--accent-str);"></div>
+            <div style="width:30px;height:6px;border-radius:99px;background:var(--accent-wash);border:1.5px solid var(--accent-str);"></div>
+          </div>
+          <span style="font-size:10px;font-weight:700;color:var(--ink-2);">5 of 7 days</span>
+        </div>
+      </div>
+      <!-- Status inside card -->
+      <div style="display:flex;align-items:center;gap:5px;margin-top:4px;">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--accent-str);flex-shrink:0;"></div>
+        <span style="font-size:11px;font-weight:700;color:var(--accent-text);">Come back next 2 days to complete the milestone</span>
+      </div>
+    </div>
+
+    <!-- Divider: Completed -->
+    <div style="display:flex;align-items:center;gap:8px;padding:4px 2px 0;">
+      <span style="font-size:9px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);white-space:nowrap;">Completed</span>
+      <div style="flex:1;height:1px;background:var(--fill);"></div>
+    </div>
+
+    <!-- CARD 2: 3-day EARNED — expandable, default collapsed -->
+    <div class="mcard earned collapsed" id="star-card" style="cursor:pointer;" onclick="toggleStarCard()">
+      <div class="mc-collapse-row">
+        <div class="mc-collapse-left">
+          <div class="mc-collapse-icon">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="2.5,6.5 5.5,9.5 10.5,3.5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="mc-collapse-name">Star · 3 Day Streak</div>
+          </div>
+        </div>
+        <div class="mc-collapse-right">
+          <div class="mc-collapse-coin">
+            <div class="coin-pip" style="width:16px;height:16px;font-size:7px;">₵</div>
+            <span class="mc-collapse-coinval">30 coins</span>
+          </div>
+          <div class="mc-collapse-caret" id="star-caret">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3,4 5,6 7,4"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expanded streak details — hidden by default -->
+      <div id="star-expanded" style="display:none;margin-top:12px;border-top:1px solid var(--fill);padding-top:12px;">
+        <!-- Segmented progress bar — same as Superstar card -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div style="display:flex;gap:4px;">
+            <div style="width:30px;height:6px;border-radius:99px;background:var(--ink);"></div>
+            <div style="width:30px;height:6px;border-radius:99px;background:var(--ink);"></div>
+            <div style="width:30px;height:6px;border-radius:99px;background:var(--ink);"></div>
+          </div>
+          <span style="font-size:10px;font-weight:700;color:var(--ink-2);">3 of 3 days</span>
+        </div>
+        <!-- Completed status -->
+        <div style="display:flex;align-items:center;gap:6px;background:var(--fill-2);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:8px 10px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--ink);flex-shrink:0;"></div>
+          <span style="font-size:11px;font-weight:700;color:var(--ink);">Milestone completed · Jun 23 – Jun 25</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider: Upcoming -->
+    <div style="display:flex;align-items:center;gap:8px;padding:4px 2px 0;">
+      <span style="font-size:9px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);white-space:nowrap;">Upcoming</span>
+      <div style="flex:1;height:1px;background:var(--fill);"></div>
+    </div>
+
+    <!-- CARD 3: 15-day PENDING -->
+    <div class="mcard pending">
+      <div class="mc-top">
+        <div>
+          <div class="mc-name">Pro · 15 Day Streak</div>
+        </div>
+        <div class="mc-icon locked">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round">
+            <rect x="2.5" y="5.5" width="7" height="5" rx="1"/><path d="M4,5.5V4a2,2,0,0,1,4,0v1.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mc-coins">
+        <div class="coin-pip dim">₵</div>
+        <span class="coin-num" style="color:var(--muted)">Earn 150 coins</span>
+      </div>
+      <div class="mc-prog">
+        <div class="prog-track"><div class="prog-fill" style="width:0%"></div></div>
+        <div class="prog-meta"><span>Earned 0 coins in 0 days</span><span>0 / 15 days</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 4: 30-day PENDING -->
+    <div class="mcard pending">
+      <div class="mc-top">
+        <div>
+          <div class="mc-name">Legend · 30 Day Streak</div>
+        </div>
+        <div class="mc-icon locked">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round">
+            <rect x="2.5" y="5.5" width="7" height="5" rx="1"/><path d="M4,5.5V4a2,2,0,0,1,4,0v1.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mc-coins">
+        <div class="coin-pip dim">₵</div>
+        <span class="coin-num" style="color:var(--muted)">Earn 300 coins</span>
+      </div>
+      <div class="mc-prog">
+        <div class="prog-track"><div class="prog-fill" style="width:0%"></div></div>
+        <div class="prog-meta"><span>Earned 0 coins in 0 days</span><span>0 / 30 days</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  </div><!-- /phone-scroll -->
+
+  <!-- Overlay (how it works sheet) -->
+  <div class="sheet-overlay" id="hiw-overlay" onclick="closeHowItWorks()"></div>
+
+  <!-- How it works bottom sheet -->
+  <div class="bottom-sheet" id="hiw-sheet">
+    <div class="sheet-handle"></div>
+
+    <div class="sheet-header">
+      <div>
+        <div class="sheet-title">How it works</div>
+        <div class="sheet-sub">Complete your daily streak</div>
+      </div>
+      <button class="close-btn" onclick="closeHowItWorks()">✕</button>
+    </div>
+
+    <!-- Intro -->
+    <div style="padding:12px 16px 0;">
+      <p style="font-size:13px;color:var(--ink-2);line-height:1.6;margin:0;">To count a streak day, complete <strong style="color:var(--ink);">all three formats</strong> every day. Miss one and the day won't count.</p>
+    </div>
+
+    <!-- Format rows -->
+    <div style="padding:14px 16px 0;display:flex;flex-direction:column;gap:10px;">
+
+      <!-- Game -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--fill-2);border:1.5px solid var(--line);border-radius:var(--r-md);">
+        <div style="width:36px;height:36px;border-radius:var(--r-sm);background:var(--surface);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--ink)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="14" height="10" rx="2"/><line x1="6" y1="9" x2="6" y2="11"/><line x1="5" y1="10" x2="7" y2="10"/><circle cx="12" cy="9.5" r="0.8" fill="var(--ink)"/><circle cx="14" cy="11" r="0.8" fill="var(--ink)"/>
+          </svg>
+        </div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;">Play 1 Game</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Any game from the games section</div>
+        </div>
+        <div style="width:20px;height:20px;border-radius:50%;background:var(--fill);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,5 4.5,7.5 8,2.5"/></svg>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--fill-2);border:1.5px solid var(--line);border-radius:var(--r-md);">
+        <div style="width:36px;height:36px;border-radius:var(--r-sm);background:var(--surface);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--ink)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="9" r="7"/><path d="M7,7a2,2,0,1,1,2,2v1.5"/><circle cx="9" cy="13" r="0.6" fill="var(--ink)"/>
+          </svg>
+        </div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;">Answer 1 Quiz</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Any quiz from the quiz section</div>
+        </div>
+        <div style="width:20px;height:20px;border-radius:50%;background:var(--fill);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,5 4.5,7.5 8,2.5"/></svg>
+        </div>
+      </div>
+
+      <!-- Poll -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--fill-2);border:1.5px solid var(--line);border-radius:var(--r-md);">
+        <div style="width:36px;height:36px;border-radius:var(--r-sm);background:var(--surface);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--ink)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="10" width="3" height="5" rx="1"/><rect x="7.5" y="6" width="3" height="9" rx="1"/><rect x="12" y="3" width="3" height="12" rx="1"/>
+          </svg>
+        </div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;">Vote in 1 Poll</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Any poll from the polls section</div>
+        </div>
+        <div style="width:20px;height:20px;border-radius:50%;background:var(--fill);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,5 4.5,7.5 8,2.5"/></svg>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Note -->
+    <div style="margin:12px 16px 0;padding:10px 12px;background:var(--accent-wash);border:1.5px dashed var(--accent-str);border-radius:var(--r-md);">
+      <p style="font-size:11px;color:var(--accent-text);font-weight:600;margin:0;line-height:1.5;">Complete all three every day to keep your streak alive and earn 10 coins per day.</p>
+    </div>
+
+    <!-- Complete streak CTA -->
+    <div style="padding:16px 16px 20px;">
+      <button onclick="closeHowItWorks()" style="width:100%;height:48px;border-radius:var(--r-lg);background:var(--ink);border:none;font:700 14px var(--font);letter-spacing:-0.01em;color:#fff;cursor:pointer;">
+        Complete Today's Streak
+      </button>
+    </div>
+
+  </div><!-- /hiw-sheet -->
+
+  <!-- Home indicator -->
+  <div style="height:28px;background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+    <div style="width:120px;height:4px;border-radius:99px;background:var(--ink);opacity:0.25;"></div>
+  </div>
+
+</div><!-- /phone -->
+
+<script>
+const MILESTONES = {
+  star: {
+    title: 'Current Streak',
+    sub: 'Jun 23 – Jun 25, 2026',
+    totalDays: 3,
+    doneDays: 3,
+    remainingDays: 0,
+    dates: ['Jun 23', 'Jun 24', 'Jun 25']
+  },
+  superstar: {
+    title: 'Current Streak',
+    sub: 'Jun 24 – Jun 30, 2026',
+    totalDays: 7,
+    doneDays: 5,
+    remainingDays: 2,
+    dates: ['Jun 24', 'Jun 25', 'Jun 26', 'Jun 27', 'Jun 28', 'Jun 29', 'Jun 30']
+  }
+};
+
+function openHowItWorks() {
+  document.getElementById('hiw-overlay').classList.add('open');
+  document.getElementById('hiw-sheet').classList.add('open');
+}
+
+function closeHowItWorks() {
+  document.getElementById('hiw-overlay').classList.remove('open');
+  document.getElementById('hiw-sheet').classList.remove('open');
+}
+
+function toggleStarCard() {
+  const expanded = document.getElementById('star-expanded');
+  const caret    = document.getElementById('star-caret');
+  const card     = document.getElementById('star-card');
+  const isOpen   = expanded.style.display !== 'none';
+
+  if (isOpen) {
+    expanded.style.display = 'none';
+    card.style.padding = '11px 14px';
+    caret.style.transform = 'rotate(0deg)';
+  } else {
+    expanded.style.display = 'block';
+    card.style.padding = '11px 14px';
+    caret.style.transform = 'rotate(180deg)';
+  }
+  caret.style.transition = 'transform 200ms';
+}
+
+function buildDayTracker(total, done, remaining, dates) {
+  const tracker = document.getElementById('day-tracker');
+  tracker.innerHTML = '';
+  tracker.innerHTML = '';
+
+  for (let d = 1; d <= total; d++) {
+    const isDone      = d <= done;
+    const isRemaining = d > done && d <= done + remaining;
+    const dateStr     = dates && dates[d-1] ? dates[d-1] : '';
+    const dateParts   = dateStr.split(' ');
+
+    const col = document.createElement('div');
+    col.style.cssText = 'flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;';
+
+    // Uniform rectangle bar with D# inside
+    const bar = document.createElement('div');
+    bar.style.cssText = `
+      width:100%;height:40px;border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:9px;font-weight:800;letter-spacing:0.03em;
+    `;
+
+    if (isDone) {
+      bar.style.background = 'var(--ink)';
+      bar.style.color = '#fff';
+    } else if (isRemaining) {
+      bar.style.background = 'var(--accent-wash)';
+      bar.style.border = '1.5px solid var(--accent-str)';
+      bar.style.color = 'var(--accent-text)';
+    } else {
+      bar.style.background = 'var(--fill)';
+      bar.style.border = '1.5px solid var(--line)';
+      bar.style.color = 'var(--muted)';
+    }
+    bar.textContent = `D${d}`;
+
+    // Date below as single line
+    const dateWrap = document.createElement('div');
+    dateWrap.textContent = dateStr;
+    dateWrap.style.cssText = `font-size:8px;font-weight:600;line-height:1.2;text-align:center;color:${isDone ? 'var(--ink-2)' : isRemaining ? 'var(--accent-text)' : 'var(--muted)'};`;
+
+    col.appendChild(bar);
+    col.appendChild(dateWrap);
+    tracker.appendChild(col);
+  }
+}
+</script>
+</body>
+</html>
