@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HT Games — Play Landing</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --ink:        #2A3A53;
+  --ink-2:      #545F71;
+  --muted:      #9BA5B7;
+  --fill:       #EEF1F4;
+  --fill-2:     #F7F8FA;
+  --line:       #BAC0CA;
+  --surface:    #FFFFFF;
+  --accent:     #F6CA56;
+  --accent-str: #F6BE2C;
+  --accent-wash:#FFFAEF;
+  --accent-text:#936B06;
+  --teal:       #005D6B;
+  --teal-light: #DAF6FA;
+  --teal-mid:   #A6E5ED;
+  --bg-page:    #F2F5FB;
+  --orange:     #FF7D01;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 20px; --r-pill: 999px;
+  --font: 'Inter', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: #D6DBE3;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 16px 64px;
+}
+
+.phone {
+  width: 393px;
+  height: 852px;
+  background: var(--bg-page);
+  border-radius: 44px;
+  overflow: hidden;
+  border: 10px solid var(--ink);
+  box-shadow: 0 32px 72px rgba(42,58,83,.32);
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.phone-scroll::-webkit-scrollbar { display: none; }
+
+/* Status bar */
+.statusbar {
+  background: var(--surface);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px 9px;
+  flex-shrink: 0;
+}
+.statusbar span { font-size: 11px; font-weight: 700; color: var(--ink); }
+
+/* Top nav */
+.topnav {
+  background: var(--surface);
+  padding: 8px 16px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--fill);
+  flex-shrink: 0;
+}
+.icon-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--fill-2); border: 1.5px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+}
+.coins-badge {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--accent-wash); border: 1.5px solid var(--accent-str);
+  border-radius: var(--r-pill); padding: 5px 12px;
+}
+.coins-badge .coin-dot {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent); border: 1.5px solid var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7px; font-weight: 800; color: var(--accent-text);
+}
+.coins-badge span { font-size: 13px; font-weight: 800; color: var(--accent-text); }
+
+/* Hero banner */
+.hero-banner {
+  background: var(--surface);
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid var(--fill);
+  position: relative;
+  overflow: hidden;
+}
+.hero-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 4px;
+}
+.hero-title {
+  font-size: 26px; font-weight: 800; color: var(--ink);
+  letter-spacing: -0.03em; line-height: 1.1;
+}
+.hero-dice {
+  position: absolute; right: 16px; top: 16px;
+  width: 64px; height: 64px; border-radius: 14px;
+  background: var(--fill); border: 1.5px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Greeting row */
+.greeting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px 0;
+}
+.greeting-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+.tier-pill {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--accent-wash); border: 1.5px solid var(--accent-str);
+  border-radius: var(--r-pill); padding: 3px 10px;
+  font-size: 11px; font-weight: 700; color: var(--accent-text);
+}
+
+/* Streak section */
+.streak-section {
+  background: var(--surface);
+  margin: 12px 16px 0;
+  border-radius: var(--r-lg);
+  border: 1.5px solid var(--line);
+  overflow: hidden;
+}
+.streak-head {
+  padding: 12px 14px 6px;
+  display: flex; align-items: center; gap: 7px;
+}
+.streak-label { font-size: 17px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.streak-started { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding: 0 14px 8px; }
+.days-row {
+  display: flex; gap: 4px; padding: 0 10px 12px; align-items: flex-end;
+}
+.day-cell { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.day-name { font-size: 9px; font-weight: 600; color: var(--muted); }
+.day-box {
+  width: 100%; height: 36px; border-radius: 7px;
+  background: var(--fill); border: 1.5px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 600; color: var(--muted);
+}
+.day-box.done   { background: var(--accent); border-color: var(--accent-str); color: var(--accent-text); font-size: 14px; }
+.day-box.today  { background: var(--teal-mid); border-color: var(--teal); color: var(--teal); height: 46px; font-size: 14px; font-weight: 800; }
+.highest-streak {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-top: 1px solid var(--fill);
+  font-size: 11px; color: var(--muted);
+}
+.highest-streak strong { color: var(--ink); }
+
+/* Earn coins strip */
+.earn-strip {
+  margin: 12px 16px 0;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 11px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.earn-strip-label { font-size: 13px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 6px; }
+.earn-badge {
+  background: var(--accent); border: 1.5px solid var(--ink);
+  border-radius: var(--r-pill); padding: 5px 14px;
+  font-size: 13px; font-weight: 800; color: var(--accent-text);
+}
+
+/* Section label */
+.section-lbl {
+  font-size: 14px; font-weight: 700; color: var(--ink);
+  padding: 16px 16px 8px; letter-spacing: -0.01em;
+}
+
+/* Game cards grid */
+.game-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 16px;
+}
+.game-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 14px 12px 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.game-icon {
+  width: 52px; height: 52px; border-radius: var(--r-md);
+  background: var(--fill); border: 1.5px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+}
+.game-name { font-size: 15px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; }
+.game-meta { font-size: 11px; color: var(--orange); font-weight: 600; }
+.play-btn {
+  width: 100%; height: 36px;
+  background: var(--teal); border: none; border-radius: var(--r-pill);
+  font: 700 13px var(--font); color: #fff; cursor: pointer;
+}
+
+/* Milestone section */
+.milestone-section {
+  margin: 16px 16px 0;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.ms-head {
+  background: var(--fill-2);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--fill);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+}
+.ms-tier { font-size: 13px; font-weight: 700; color: var(--orange); margin-top: 1px; }
+.ms-status { font-size: 12px; color: var(--ink-2); margin-top: 2px; }
+.ms-status strong { color: var(--teal); }
+
+.ms-journey {
+  display: flex; align-items: flex-end; justify-content: space-around;
+  padding: 14px 12px 12px; position: relative;
+}
+.ms-journey::before {
+  content: '';
+  position: absolute;
+  left: 60px; right: 60px; top: 28px;
+  height: 1.5px; background: var(--fill);
+}
+.msj-item { display: flex; flex-direction: column; align-items: center; gap: 5px; position: relative; z-index: 1; }
+.msj-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--fill); border: 1.5px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+}
+.msj-icon.done   { background: var(--ink); border-color: var(--ink); }
+.msj-icon.active { background: var(--accent); border-color: var(--accent-str); }
+.msj-days { font-size: 11px; font-weight: 700; color: var(--ink); }
+.msj-name { font-size: 10px; color: var(--muted); }
+.msj-item.dim .msj-days { color: var(--muted); font-weight: 500; }
+
+.see-all-btn {
+  display: block; width: calc(100% - 28px); height: 42px;
+  margin: 0 14px 14px;
+  background: var(--teal-light); border: 1.5px solid var(--teal);
+  border-radius: var(--r-pill); font: 700 14px var(--font);
+  color: var(--teal); cursor: pointer;
+}
+
+/* Leaderboard mini */
+.lb-section {
+  margin: 12px 16px 0;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.lb-avatars {
+  display: flex; gap: 4px; padding: 12px 14px 4px; align-items: center;
+}
+.lb-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--fill); border: 1.5px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--ink-2);
+}
+.lb-social { font-size: 11px; color: var(--muted); padding: 0 14px 8px; }
+.lb-social strong { color: var(--ink); }
+.lb-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-top: 1px solid var(--fill);
+}
+.lb-ava {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--fill); border: 1.5px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--ink-2);
+  flex-shrink: 0;
+}
+.lb-name { flex: 1; font-size: 13px; font-weight: 600; color: var(--ink); }
+.lb-name.you { font-weight: 800; }
+.lb-time { font-size: 13px; font-weight: 600; color: var(--muted); }
+.lb-full-btn {
+  display: block; width: calc(100% - 28px); height: 42px;
+  margin: 8px 14px 14px;
+  background: var(--teal-light); border: 1.5px solid var(--teal);
+  border-radius: var(--r-pill); font: 700 14px var(--font);
+  color: var(--teal); cursor: pointer;
+}
+
+/* Share card */
+.share-card {
+  margin: 16px 16px 24px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 24px 20px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  text-align: center;
+}
+.share-illustration {
+  width: 110px; height: 90px;
+  background: var(--fill); border: 1.5px solid var(--line);
+  border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+}
+.share-title { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.share-sub   { font-size: 12px; color: var(--muted); line-height: 1.5; max-width: 240px; }
+.share-btn-cta {
+  height: 40px; padding: 0 32px;
+  background: var(--teal); border: none; border-radius: var(--r-pill);
+  font: 700 14px var(--font); color: #fff; cursor: pointer;
+}
+
+/* Bottom tab bar */
+.tabbar {
+  background: var(--surface); border-top: 1px solid var(--fill);
+  display: flex; align-items: center;
+  padding: 8px 0 10px; flex-shrink: 0;
+}
+.tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  cursor: pointer;
+}
+.tab-icon { font-size: 20px; }
+.tab-label { font-size: 10px; font-weight: 600; color: var(--muted); }
+.tab.active .tab-label { color: var(--teal); }
+.tab.active .tab-icon-svg stroke { stroke: var(--teal); }
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- Status bar -->
+  <div class="statusbar">
+    <span>9:41</span>
+    <span style="letter-spacing:1px;">● ● ● ▲</span>
+    <span>100%</span>
+  </div>
+
+  <!-- Top nav -->
+  <div class="topnav">
+    <div class="icon-btn" onclick="window.location.href='Play-Home.html'" style="cursor:pointer;">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--ink-2)" stroke-width="2" stroke-linecap="round"><line x1="3" y1="5" x2="15" y2="5"/><line x1="3" y1="9" x2="15" y2="9"/><line x1="3" y1="13" x2="15" y2="13"/></svg>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="icon-btn">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--ink-2)" stroke-width="1.7" stroke-linecap="round"><path d="M9 2a5 5 0 015 5c0 3-5 9-5 9S4 10 4 7a5 5 0 015-5z"/><circle cx="9" cy="7" r="1.5"/></svg>
+      </div>
+      <div class="coins-badge">
+        <div class="coin-dot">₵</div>
+        <span>354</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phone-scroll">
+
+    <!-- Hero banner -->
+    <div class="hero-banner">
+      <div class="hero-eyebrow">Today's challenge</div>
+      <div class="hero-title">Play. Participate.<br>Win.</div>
+      <div class="hero-dice">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--ink-2)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="26" height="26" rx="5"/><circle cx="10" cy="10" r="1.8" fill="var(--ink-2)"/><circle cx="22" cy="10" r="1.8" fill="var(--ink-2)"/><circle cx="10" cy="22" r="1.8" fill="var(--ink-2)"/><circle cx="22" cy="22" r="1.8" fill="var(--ink-2)"/><circle cx="16" cy="16" r="1.8" fill="var(--ink-2)"/></svg>
+      </div>
+    </div>
+
+    <!-- Greeting + tier -->
+    <div class="greeting-row">
+      <span class="greeting-name">Hi! Komal</span>
+      <div class="tier-pill">
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><polygon points="5.5,1 7,4.2 10.5,4.6 8,7 8.7,10.5 5.5,8.7 2.3,10.5 3,7 0.5,4.6 4,4.2" fill="var(--accent-str)" stroke="var(--accent-text)" stroke-width="0.6"/></svg>
+        Superstar
+      </div>
+    </div>
+
+    <!-- Streak section -->
+    <div class="streak-section">
+      <div class="streak-head">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="var(--accent)" stroke="var(--accent-str)" stroke-width="1.2" stroke-linecap="round"><path d="M10 2c0 3-4 5-4 8a4 4 0 008 0c0-3-4-5-4-8z"/></svg>
+        <span class="streak-label">8 days win streak!</span>
+      </div>
+      <div class="streak-started">Started Jun 18</div>
+      <div class="days-row">
+        <div class="day-cell">
+          <div class="day-name">Sun</div>
+          <div class="day-box done">✓</div>
+        </div>
+        <div class="day-cell">
+          <div class="day-name">Mon</div>
+          <div class="day-box done">✓</div>
+        </div>
+        <div class="day-cell">
+          <div class="day-name">Tue</div>
+          <div class="day-box today">22</div>
+        </div>
+        <div class="day-cell">
+          <div class="day-name">Thu</div>
+          <div class="day-box">23</div>
+        </div>
+        <div class="day-cell">
+          <div class="day-name">Fri</div>
+          <div class="day-box">24</div>
+        </div>
+        <div class="day-cell">
+          <div class="day-name">Sat</div>
+          <div class="day-box">25</div>
+        </div>
+      </div>
+      <div class="highest-streak">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="var(--accent)" stroke="var(--accent-str)" stroke-width="1" stroke-linecap="round"><path d="M7 1.5c0 2-3 3.5-3 5.5a3 3 0 006 0c0-2-3-3.5-3-5.5z"/></svg>
+        Your highest streak is <strong>&nbsp;150 days!</strong>
+      </div>
+    </div>
+
+    <!-- Earn coins strip -->
+    <div class="earn-strip">
+      <div class="earn-strip-label">
+        <div class="coin-dot" style="width:20px;height:20px;border-radius:50%;background:var(--accent);border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:var(--accent-text);">₵</div>
+        Earn coins today
+      </div>
+      <div class="earn-badge">50 Coins</div>
+    </div>
+
+    <!-- Play Games section -->
+    <div class="section-lbl">Play Games &amp; Earn coins</div>
+
+    <div class="game-grid">
+      <!-- Quiz -->
+      <div class="game-card">
+        <div class="game-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--ink-2)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="18" height="22" rx="2"/><line x1="9" y1="9" x2="19" y2="9"/><line x1="9" y1="13" x2="16" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+        </div>
+        <div class="game-name">Quiz</div>
+        <div class="game-meta">3 quiz left today</div>
+        <button class="play-btn">Play Now</button>
+      </div>
+      <!-- Games -->
+      <div class="game-card">
+        <div class="game-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--ink-2)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="22" height="14" rx="3"/><line x1="9" y1="13" x2="9" y2="17"/><line x1="7" y1="15" x2="11" y2="15"/><circle cx="19" cy="14" r="1.2" fill="var(--ink-2)"/><circle cx="22" cy="16" r="1.2" fill="var(--ink-2)"/></svg>
+        </div>
+        <div class="game-name">Games</div>
+        <div class="game-meta">5 Games</div>
+        <button class="play-btn">Play Now</button>
+      </div>
+      <!-- Poll -->
+      <div class="game-card">
+        <div class="game-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--ink-2)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="16" width="4" height="8" rx="1"/><rect x="12" y="10" width="4" height="14" rx="1"/><rect x="19" y="4" width="4" height="20" rx="1"/></svg>
+        </div>
+        <div class="game-name">Poll</div>
+        <div class="game-meta">2 poll left</div>
+        <button class="play-btn">Play Now</button>
+      </div>
+    </div>
+
+    <!-- Milestones section -->
+    <div class="section-lbl" style="padding-top:20px;">Milestones</div>
+    <div class="milestone-section" onclick="window.location.href='milestone-screen.html'" style="cursor:pointer;">
+      <div class="ms-head">
+        <div class="ms-tier">You're Superstar</div>
+        <div class="ms-status">Only <strong>7 days left</strong> to be a champion</div>
+      </div>
+      <div class="ms-journey">
+        <!-- Star — done -->
+        <div class="msj-item">
+          <div class="msj-icon done">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><polyline points="2.5,7 5.5,10 11.5,3.5"/></svg>
+          </div>
+          <div class="msj-days">3 days</div>
+          <div class="msj-name">Star</div>
+        </div>
+        <!-- Superstar — active -->
+        <div class="msj-item">
+          <div class="msj-icon active">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--accent-text)" stroke-width="1.5"><polygon points="7,1.5 8.8,5.2 12.9,5.7 9.9,8.6 10.7,12.7 7,10.6 3.3,12.7 4.1,8.6 1.1,5.7 5.2,5.2" fill="var(--accent-str)"/></svg>
+          </div>
+          <div class="msj-days">5 days</div>
+          <div class="msj-name">Superstar</div>
+        </div>
+        <!-- Champion — locked -->
+        <div class="msj-item dim">
+          <div class="msj-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h6M4 11h6M7 4v3"/><rect x="3" y="7" width="8" height="5" rx="1"/></svg>
+          </div>
+          <div class="msj-days">15 days</div>
+          <div class="msj-name">Champion</div>
+        </div>
+        <!-- Icon — locked -->
+        <div class="msj-item dim">
+          <div class="msj-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"><polygon points="7,1.5 8.8,5.2 12.9,5.7 9.9,8.6 10.7,12.7 7,10.6 3.3,12.7 4.1,8.6 1.1,5.7 5.2,5.2"/></svg>
+          </div>
+          <div class="msj-days">31 days</div>
+          <div class="msj-name">Icon</div>
+        </div>
+      </div>
+      <button class="see-all-btn" onclick="event.stopPropagation();window.location.href='milestone-screen.html'">See All Milestones</button>
+    </div>
+
+    <!-- Leaderboard mini -->
+    <div class="lb-section">
+      <div class="lb-avatars">
+        <div class="lb-avatar">K</div>
+        <div class="lb-avatar">Y</div>
+        <div class="lb-avatar">R</div>
+      </div>
+      <div class="lb-social"><strong>9 Players</strong> have played today!</div>
+      <div class="lb-row">
+        <div class="lb-ava">K</div>
+        <div class="lb-name">Komal Sriram</div>
+        <div class="lb-time">0:30</div>
+      </div>
+      <div class="lb-row" style="background:var(--fill-2);">
+        <div class="lb-ava" style="background:var(--ink);color:#fff;">Y</div>
+        <div class="lb-name you">You</div>
+        <div class="lb-time" style="color:var(--ink);font-weight:800;">1:14</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-ava">R</div>
+        <div class="lb-name">Rahul R Nandkarni</div>
+        <div class="lb-time">0:30</div>
+      </div>
+      <button class="lb-full-btn" onclick="goToLeaderboard()">See Full Leaderboard</button>
+    </div>
+
+    <!-- Share card -->
+    <div class="share-card">
+      <div class="share-illustration">
+        <svg width="48" height="40" viewBox="0 0 48 40" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round"><circle cx="18" cy="12" r="7"/><path d="M4 38c0-8 6-12 14-12s14 4 14 12"/><circle cx="36" cy="14" r="5"/><path d="M38 28c0-5 3-8 8-8"/></svg>
+      </div>
+      <div class="share-title">Share &amp; win</div>
+      <div class="share-sub">Invite your friends and family to join for a chance to win exciting rewards.</div>
+      <button class="share-btn-cta">Share</button>
+    </div>
+
+  </div><!-- /phone-scroll -->
+
+  <!-- Bottom tab bar -->
+  <div class="tabbar">
+    <div class="tab">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9L11 3l8 6v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9z"/></svg>
+      <span class="tab-label">Home</span>
+    </div>
+    <div class="tab">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="13" y="3" width="6" height="6" rx="1"/><rect x="3" y="13" width="6" height="6" rx="1"/><rect x="13" y="13" width="6" height="6" rx="1"/></svg>
+      <span class="tab-label">Summary</span>
+    </div>
+    <div class="tab">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round"><polygon points="11,2 14,8 20,9 15.5,13.5 16.8,20 11,17 5.2,20 6.5,13.5 2,9 8,8"/></svg>
+      <span class="tab-label">Premium</span>
+    </div>
+    <div class="tab">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round"><path d="M11 3c0 4-5 6-5 10a5 5 0 0010 0c0-4-5-6-5-10z"/></svg>
+      <span class="tab-label">Astro</span>
+    </div>
+    <div class="tab active">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--teal)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="16" height="12" rx="2"/><line x1="8" y1="12" x2="8" y2="14"/><line x1="7" y1="13" x2="9" y2="13"/><circle cx="14" cy="12.5" r="0.8" fill="var(--teal)"/><circle cx="16" cy="14" r="0.8" fill="var(--teal)"/></svg>
+      <span class="tab-label" style="color:var(--teal);">Play</span>
+    </div>
+  </div>
+
+</div><!-- /phone -->
+
+<script>
+function goToDashboard() {
+  window.location.href = 'milestone-screen.html';
+}
+function goToLeaderboard() {
+  window.location.href = 'milestone-screen.html';
+}
+</script>
+</body>
+</html>
